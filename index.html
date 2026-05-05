@@ -135,7 +135,7 @@
   <div id="page-loader" class="page-loader fixed inset-0 z-[100] flex items-center justify-center bg-white" role="status" aria-live="polite" aria-busy="true">
     <span class="sr-only">Cargando…</span>
     <img
-      src="logo.jpg"
+      src="logo.png"
       alt=""
       class="page-loader-logo h-28 sm:h-32 md:h-36 w-auto max-w-[min(340px,88vw)] object-contain pointer-events-none select-none"
       width="340"
@@ -734,27 +734,34 @@
     const iconMenu   = document.getElementById('icon-menu');
     const iconClose  = document.getElementById('icon-close');
 
-    menuBtn.addEventListener('click', () => {
-      const open = !mobileMenu.classList.contains('hidden');
-      open ? closeMenu() : openMenu();
-    });
+    if (menuBtn && mobileMenu && iconMenu && iconClose) {
+      menuBtn.addEventListener('click', () => {
+        const open = !mobileMenu.classList.contains('hidden');
+        open ? closeMenu() : openMenu();
+      });
+    }
 
     function openMenu() {
+      if (!mobileMenu || !iconMenu || !iconClose) return;
       mobileMenu.classList.remove('hidden');
       iconMenu.classList.add('hidden');
       iconClose.classList.remove('hidden');
     }
 
     function closeMenu() {
+      if (!mobileMenu || !iconMenu || !iconClose) return;
       mobileMenu.classList.add('hidden');
       iconMenu.classList.remove('hidden');
       iconClose.classList.add('hidden');
     }
 
     /* ── Header shadow on scroll ── */
-    window.addEventListener('scroll', () => {
-      document.getElementById('header').classList.toggle('shadow-md', window.scrollY > 10);
-    });
+    const headerEl = document.getElementById('header');
+    if (headerEl) {
+      window.addEventListener('scroll', () => {
+        headerEl.classList.toggle('shadow-md', window.scrollY > 10);
+      });
+    }
 
     /* ── Reveal on scroll ── */
     const observer = new IntersectionObserver((entries) => {
